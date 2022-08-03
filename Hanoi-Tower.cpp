@@ -53,6 +53,19 @@ class HanoiTower
                     for(int i = 0; i < 3; i ++)
                         cout<<data[i]<<"\t"<<data[i+3]<<"\t"<<data[i+6]<<endl;
                 };
+
+            bool Win()
+                {
+                    for(int col = 0; col < 7; col += 3)
+                        {
+                            if(data[col] == 1)
+                                {
+                                    if (data[col+1] == 2)
+                                        return 1;
+                                };
+                        };
+                    return 0;
+                };
     };
 
 int main()
@@ -61,7 +74,11 @@ int main()
     HanoiTower HT;
     // HT.MyFill();
     // HT.lineshow();
-    HT.RandFill();
+    // HT.RandFill();
+    
+    // HT.data = {1,2,3,0,0,0,0,0,0};
+    // if(HT.Win()) cout<<"YOU WIN!\n";
     HT.show();
+    
     return 0;
 }
