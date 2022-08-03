@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <array>
+#include <vector>
 #include <ctime>
 
 using namespace std;
@@ -27,14 +28,16 @@ class HanoiTower
                         data[i] = i;
                 };
 
-            void RandFill() // проблема в том что тройка всегда будет на нижней строке.
+            void RandFill() // рандомно заполняет столбцы блоками 
                 {
-                    int block = 3;
-                    while(block)
+                    vector<int> blocks = {1,2,3}; // пул блоков.
+                    while(!blocks.empty())
                         {
-                            int columm = ((rand() % 3) * 3) + 2; // рандомно выбирается столбец
-                            while(data[columm]) columm--; // если нижняя позиция занята поднимаемся на 1 строку выше
-                            data[columm] = block--; // когда находим свободную позицию заполняем её.
+                            int it_blocks = (rand() % blocks.size()); // итератор блока который будет добавлен.
+                            int columm = ((rand() % 3) * 3) + 2; // рандомно выбирается столбец.
+                            while(data[columm]) columm--; // если нижняя позиция занята поднимаемся на 1 строку выше.
+                            data[columm] = blocks[it_blocks]; // когда находим свободную позицию заполняем её.
+                            blocks.erase(blocks.begin() + it_blocks); // удаляем уже вставленный блок.
                         };
                 };
 
