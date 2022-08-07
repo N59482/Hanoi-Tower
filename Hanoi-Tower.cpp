@@ -66,6 +66,47 @@ class HanoiTower
                         };
                     return 0;
                 };
+
+            void move()
+                {
+                    int block = 0;
+                    int newPlace = 0;
+                    int box = 0;
+                    cout<<"Выберите столбец с которого хотите переместить блок.\n";
+                    cin>> block;
+                    while((block < 1) || (block > 3))
+                        {
+                            cout<<"Неверное значение стобца.\n Введите номер столбца - от 1 до 3";
+                            cin>> block;
+                        };
+                    // проверить что бы в этом стобце вообще были блоки.
+                    cout<<"Выберите столбец куда будет перемещён блок.\n";
+                    cin>> newPlace;
+                    while((block < 1) || (block > 3))
+                        {
+                            cout<<"Неверное значение стобца.\n Введите номер столбца - от 1 до 3";
+                            cin>> block;
+                        };
+                    while(newPlace == block)
+                        {
+                            cout<<"Блок уже находится на этом стобце.\n Выберите столбец куда будет перемещён блок.";
+                            cin>> block;
+                        };
+                    // while() // проверить что бы нижний блок был не меньше верхнего при переносе.
+                    //     {
+                    //     };
+                    
+                    block = (block - 1) * 3 ;// для того чтобы получить значение
+                    newPlace = (newPlace - 1) * 3;
+                    while(!data[block]) block++;
+
+                    while(!data[newPlace + 1]) newPlace++; // неправильно перемещает если стобец полностью пуст
+                    
+                    box = data[newPlace];
+                    data[newPlace] = data[block];
+                    data[block] = box;                    
+                };
+
     };
 
 int main()
@@ -74,11 +115,22 @@ int main()
     HanoiTower HT;
     // HT.MyFill();
     // HT.lineshow();
-    // HT.RandFill();
+    HT.RandFill();
     
     // HT.data = {1,2,3,0,0,0,0,0,0};
     // if(HT.Win()) cout<<"YOU WIN!\n";
     HT.show();
+    
+    while(!HT.Win())
+        {
+            HT.move();
+            HT.show();
+        };
+    
+
+    // HT.move();
+    // HT.show();
+    if(HT.Win()) cout<<"YOU WIN!\n";
     
     return 0;
 }
