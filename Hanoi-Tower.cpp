@@ -2,6 +2,10 @@
 
 Ханойская башня
 
+
+0   3   6
+1   4   7
+2   5   8
 *******************************************************************************/
 
 #include <iostream>
@@ -67,35 +71,54 @@ class HanoiTower
                     return 0;
                 };
 
-            void move()
+            void PlayerReplace() // Ход игрока(доделать)
                 {
-                    int block = 0;
+                    int picked_Column = 0;
                     int newPlace = 0;
-                    int box = 0;
+                    bool ok = 0;
+
                     cout<<"Выберите столбец с которого хотите переместить блок.\n";
-                    cin>> block;
-                    while((block < 1) || (block > 3))
+                    while(!ok)
                         {
-                            cout<<"Неверное значение стобца.\n Введите номер столбца - от 1 до 3";
-                            cin>> block;
+                            cin>> picked_Column;
+                            if((picked_Column < 1) || (picked_Column > 3)) 
+                                {
+                                    cout<<"Неверное значение стобца.\nВведите номер столбца - от 1 до 3.\n";
+                                    ok = 0;
+                                }
+                                else if(!data[(picked_Column*3)-1])
+                                        {
+                                            cout<<"Упс, этот столбец пуст!\nВыберите столбец в котором есть блоки.\n";
+                                            ok = 0;
+                                        }
+                                        else ok = 1;
                         };
-                    // проверить что бы в этом стобце вообще были блоки.
-                    cout<<"Выберите столбец куда будет перемещён блок.\n";
-                    cin>> newPlace;
-                    while((block < 1) || (block > 3))
-                        {
-                            cout<<"Неверное значение стобца.\n Введите номер столбца - от 1 до 3";
-                            cin>> block;
-                        };
-                    while(newPlace == block)
-                        {
-                            cout<<"Блок уже находится на этом стобце.\n Выберите столбец куда будет перемещён блок.";
-                            cin>> block;
-                        };
-                    // while() // проверить что бы нижний блок был не меньше верхнего при переносе.
-                    //     {
-                    //     };
                     
+                    ok = 0;
+                    cout<<"Выберите столбец куда будет перемещён блок.\n";
+                    while(!ok)
+                        {
+                            cin>> newPlace;
+                            if((newPlace < 1) || (newPlace > 3)) 
+                                {
+                                    cout<<"Неверное значение стобца.\nВведите номер столбца - от 1 до 3.\n";
+                                    ok = 0;
+                                }
+                                else if(newPlace == picked_Column)
+                                        {
+                                            cout<<"Блок уже находится на этом стобце.\nВыберите столбец куда будет перемещён блок.\n";
+                                            ok = 0;
+                                        }
+                                        else // проверить что бы нижний блок был не меньше верхнего при переносе.
+                                            else ok = 1;
+
+                        };
+
+                     // void move();
+                };
+
+            void move(int picked_Column, int newPlace) // перемещение блоков (доделать)
+                {
                     block = (block - 1) * 3 ;// для того чтобы получить значение
                     newPlace = (newPlace - 1) * 3;
                     while(!data[block]) block++;
@@ -104,9 +127,8 @@ class HanoiTower
                     
                     box = data[newPlace];
                     data[newPlace] = data[block];
-                    data[block] = box;                    
+                    // data[block] = box;                    
                 };
-
     };
 
 int main()
